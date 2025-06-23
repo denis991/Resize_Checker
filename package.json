@@ -1,0 +1,31 @@
+{
+  "name": "responsive-checker",
+  "version": "1.0.0",
+  "description": "A responsive design testing tool for web developers",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build:ts": "tsc",
+    "build:scss": "sass src/styles.scss dist/styles.css --style=compressed",
+    "build": "npm run clean && npm run build:ts && npm run build:scss",
+    "watch:ts": "tsc --watch",
+    "watch:scss": "sass --watch src/styles.scss:dist/styles.css",
+    "watch": "npm-run-all --parallel watch:ts watch:scss",
+    "clean": "rm -rf dist",
+    "dev": "npm run build && npm run serve",
+    "serve": "npx http-server . -p 3000 -o",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.{ts,scss,html}"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "eslint": "^9.29.0",
+    "http-server": "^14.1.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.0",
+    "sass": "^1.70.0",
+    "typescript": "^5.1.3"
+  }
+}

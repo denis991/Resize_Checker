@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Responsive Checker - инструмент для тестирования адаптивного дизайна">
+  <meta name="keywords" content="responsive, design, testing, web development">
+  <meta name="author" content="Responsive Checker">
+  <meta name="theme-color" content="#007bff">
+
+  <title>Responsive Checker - Тестирование адаптивного дизайна</title>
+
+  <link rel="stylesheet" href="../dist/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <header class="control-panel">
+      <div class="field">
+        <label for="breakpoint-select">Готовые брейкпоинты:</label>
+        <select id="breakpoint-select" aria-label="Выберите размер экрана">
+          <option value="320">320px (Mobile S)</option>
+          <option value="375">375px (Mobile M)</option>
+          <option value="425">425px (Mobile L)</option>
+          <option value="768" selected>768px (Tablet)</option>
+          <option value="1024">1024px (Desktop)</option>
+          <option value="1440">1440px (Large Desktop)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="custom-breakpoint">Пользовательский размер (px):</label>
+        <input
+          type="number"
+          id="custom-breakpoint"
+          placeholder="например: 900"
+          min="100"
+          max="3000"
+          step="1"
+          aria-label="Введите пользовательскую ширину в пикселях"
+        >
+      </div>
+
+      <div class="field full">
+        <label for="input-source">URL или HTML код:</label>
+        <textarea
+          id="input-source"
+          placeholder="Вставьте URL или HTML код для тестирования..."
+          rows="4"
+          aria-label="Поле для ввода URL или HTML кода"
+        ></textarea>
+      </div>
+
+      <button id="go-button" type="button" aria-label="Загрузить контент">
+        Go
+      </button>
+    </header>
+
+    <main class="preview-container">
+      <iframe
+        id="preview-frame"
+        sandbox="allow-same-origin allow-scripts allow-forms"
+        title="Предпросмотр контента"
+        loading="lazy"
+      ></iframe>
+    </main>
+  </div>
+
+  <script src="../dist/index.js" type="module"></script>
+</body>
+</html>

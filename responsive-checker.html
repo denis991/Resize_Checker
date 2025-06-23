@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Responsive Checker - инструмент для тестирования адаптивного дизайна">
+  <meta name="keywords" content="responsive, design, testing, web development">
+  <meta name="author" content="Responsive Checker">
+  <meta name="theme-color" content="#007bff">
+
+  <title>Responsive Checker - Тестирование адаптивного дизайна</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+<style>@keyframes slideIn{0%{transform:translate(100%);opacity:0}to{transform:translate(0);opacity:1}}@keyframes slideOut{0%{transform:translate(0);opacity:1}to{transform:translate(100%);opacity:0}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}body{margin:0;padding:20px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#f4f4f4;animation:fadeIn .5s ease}.container{max-width:1200px;margin:0 auto}.control-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;background:#fff;padding:1.5rem;border-radius:12px;box-shadow:0 4px 20px #00000014;align-items:end;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}.control-panel .field{display:flex;flex-direction:column}.control-panel .field label{font-weight:600;margin-bottom:.5rem;color:#333;font-size:.9rem}.control-panel .field input,.control-panel .field select,.control-panel .field textarea{padding:.75rem;border:2px solid #e1e5e9;border-radius:8px;font-size:1rem;width:100%;box-sizing:border-box;transition:all .2s ease;background:#fafbfc}.control-panel .field input:focus,.control-panel .field select:focus,.control-panel .field textarea:focus{outline:none;border-color:#007bff;background:#fff;box-shadow:0 0 0 3px #007bff1a}.control-panel .field input:hover,.control-panel .field select:hover,.control-panel .field textarea:hover{border-color:#cbd5e0}.control-panel .field.full{grid-column:span 2}.control-panel button{padding:.875rem 1.75rem;background:#007bff;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600;transition:all .2s ease;box-shadow:0 2px 8px #007bff4d}.control-panel button:hover{background:#0062cc;transform:translateY(-2px);box-shadow:0 4px 12px #007bff66}.control-panel button:active{transform:translateY(0);box-shadow:0 2px 8px #007bff4d}.control-panel button:disabled{background:#6c757d;cursor:not-allowed;transform:none;box-shadow:none}.preview-container{margin-top:1.5rem;background:#fff;padding:1.5rem;border-radius:12px;box-shadow:0 4px 20px #00000014;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}.preview-container iframe{width:100%;height:600px;border:2px solid #e1e5e9;border-radius:8px;transition:all .3s ease;display:block;margin:0 auto;background:#fff}.preview-container iframe:hover{border-color:#007bff;box-shadow:0 4px 20px #0000001a}@media (max-width: 768px){body{padding:10px}.control-panel{grid-template-columns:1fr;gap:.75rem;padding:1rem}.control-panel .field.full{grid-column:span 1}.preview-container{padding:1rem}.preview-container iframe{height:400px}}
+</style></head>
+<body>
+  <div class="container">
+    <header class="control-panel">
+      <div class="field">
+        <label for="breakpoint-select">Готовые брейкпоинты:</label>
+        <select id="breakpoint-select" aria-label="Выберите размер экрана">
+          <option value="320">320px (Mobile S)</option>
+          <option value="375">375px (Mobile M)</option>
+          <option value="425">425px (Mobile L)</option>
+          <option value="768" selected>768px (Tablet)</option>
+          <option value="1024">1024px (Desktop)</option>
+          <option value="1440">1440px (Large Desktop)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="custom-breakpoint">Пользовательский размер (px):</label>
+        <input
+          type="number"
+          id="custom-breakpoint"
+          placeholder="например: 900"
+          min="100"
+          max="3000"
+          step="1"
+          aria-label="Введите пользовательскую ширину в пикселях"
+        >
+      </div>
+
+      <div class="field full">
+        <label for="input-source">URL или HTML код:</label>
+        <textarea
+          id="input-source"
+          placeholder="Вставьте URL или HTML код для тестирования..."
+          rows="4"
+          aria-label="Поле для ввода URL или HTML кода"
+        ></textarea>
+      </div>
+
+      <button id="go-button" type="button" aria-label="Загрузить контент">
+        Go
+      </button>
+    </header>
+
+    <main class="preview-container">
+      <iframe
+        id="preview-frame"
+        sandbox="allow-same-origin allow-scripts allow-forms"
+        title="Предпросмотр контента"
+        loading="lazy"
+      ></iframe>
+    </main>
+  </div>
+
+  <script>var d=(n,e,t)=>new Promise((l,r)=>{var o=i=>{try{u(t.next(i))}catch(a){r(a)}},c=i=>{try{u(t.throw(i))}catch(a){r(a)}},u=i=>i.done?l(i.value):Promise.resolve(i.value).then(o,c);u((t=t.apply(n,e)).next())});(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))l(r);new MutationObserver(r=>{for(const o of r)if(o.type==="childList")for(const c of o.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&l(c)}).observe(document,{childList:!0,subtree:!0});function t(r){const o={};return r.integrity&&(o.integrity=r.integrity),r.referrerPolicy&&(o.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?o.credentials="include":r.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function l(r){if(r.ep)return;r.ep=!0;const o=t(r);fetch(r.href,o)}})();const s={defaultWidth:768,iframeSelector:"#preview-frame",selectSelector:"#breakpoint-select",customInputSelector:"#custom-breakpoint",sourceInputSelector:"#input-source",goButtonSelector:"#go-button"};class h{constructor(){this.initializeElements(),this.bindEvents(),this.initializeApp()}initializeElements(){if(this.iframe=document.querySelector(s.iframeSelector),this.select=document.querySelector(s.selectSelector),this.customInput=document.querySelector(s.customInputSelector),this.sourceInput=document.querySelector(s.sourceInputSelector),this.goBtn=document.querySelector(s.goButtonSelector),!this.iframe||!this.select||!this.customInput||!this.sourceInput||!this.goBtn)throw new Error("Required DOM elements not found")}bindEvents(){this.select.addEventListener("change",()=>this.setWidth(Number(this.select.value))),this.customInput.addEventListener("input",()=>{const e=parseInt(this.customInput.value);e>0&&this.setWidth(e)}),this.goBtn.addEventListener("click",()=>this.loadContent()),this.sourceInput.addEventListener("keydown",e=>{e.key==="Enter"&&(e.ctrlKey||e.metaKey)&&this.loadContent()})}initializeApp(){this.setWidth(Number(this.select.value)||s.defaultWidth)}setWidth(e){e<=0||(this.iframe.style.width=`${e}px`,this.iframe.style.transition="width 0.3s ease")}loadContent(){return d(this,null,function*(){const e=this.sourceInput.value.trim();if(!e){this.showError("Введите URL или HTML");return}try{this.goBtn.disabled=!0,this.goBtn.textContent="Загрузка...",this.isUrl(e)?yield this.loadUrl(e):this.loadHtml(e)}catch(t){this.showError(`Ошибка загрузки: ${t instanceof Error?t.message:"Неизвестная ошибка"}`)}finally{this.goBtn.disabled=!1,this.goBtn.textContent="Go"}})}isUrl(e){try{return new URL(e),!0}catch(t){return!1}}loadUrl(e){return d(this,null,function*(){this.iframe.src=e})}loadHtml(e){const t=this.iframe.contentDocument;if(!t)throw new Error("Не удалось получить доступ к iframe");t.open(),t.write(e),t.close()}showError(e){const t=document.createElement("div");t.style.cssText=`
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ff4444;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      max-width: 300px;
+      animation: slideIn 0.3s ease;
+    `,t.textContent=e,document.body.appendChild(t),setTimeout(()=>{t.style.animation="slideOut 0.3s ease",setTimeout(()=>t.remove(),300)},3e3)}}document.addEventListener("DOMContentLoaded",()=>{try{new h}catch(n){console.error("Ошибка инициализации приложения:",n)}});
+</script>
+</body>
+</html>

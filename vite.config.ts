@@ -1,11 +1,16 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
+  root: 'src',
   build: {
     target: 'es2015',
-    outDir: 'dist',
+    outDir: '../dist',
     assetsInlineLimit: Infinity, // Встраиваем все ассеты
     rollupOptions: {
+      input: {
+        main: resolve('src/index.html'),
+      },
       output: {
         inlineDynamicImports: true,
         manualChunks: undefined,

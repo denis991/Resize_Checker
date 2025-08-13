@@ -1,0 +1,7 @@
+{
+  "srcDir": "src",
+  "outDir": "dist",
+  "html": ["index.html"],
+  "js": [],
+  "css": []
+}

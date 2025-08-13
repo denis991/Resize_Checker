@@ -14,7 +14,7 @@
 #   make format          - Форматирование кода Prettier
 #   make serve           - Локальный сервер для production-сборки
 #
-.PHONY: build build-ts build-scss build-standalone build-single preview watch watch-ts watch-scss clean dev serve lint lint-fix format
+.PHONY: build build-ts build-scss build-standalone build-single preview watch watch-ts watch-scss clean dev serve lint lint-fix format all
 
 # Полная сборка: очистка, компиляция TS и SCSS
 build: clean build-ts build-scss
@@ -73,3 +73,53 @@ lint-fix:
 # Форматирование кода Prettier
 format:
 	yarn run format
+
+# Универсальная команда для полной сборки, минификации, обфускации и защиты
+all: build minify obfuscate protect
+
+# -----------------------------------------------------
+CONFIG = build.config.json
+SRC_DIR = $(shell jq -r .srcDir $(CONFIG))
+OUT_DIR = $(shell jq -r .outDir $(CONFIG))
+HTML = $(shell jq -r .html $(CONFIG))
+JS_FILES = $(shell jq -r '.js[]' $(CONFIG))
+CSS_FILES = $(shell jq -r '.css[]' $(CONFIG))
+
+.PHONY: build minify obfuscate protect clean
+
+build:
+	@echo "Сборка проекта..."
+	mkdir -p $(OUT_DIR)
+	@for f in $(shell jq -r '.html[]' $(CONFIG)); do cp $(SRC_DIR)/$$f $(OUT_DIR)/; done
+	@for f in $(shell jq -r '.js[]' $(CONFIG)); do cp $(SRC_DIR)/$$f $(OUT_DIR)/; done
+	@for f in $(shell jq -r '.css[]' $(CONFIG)); do cp $(SRC_DIR)/$$f $(OUT_DIR)/; done
+
+# Универсальная минификация HTML, CSS, JS
+minify:
+	@echo "Минификация HTML, CSS, JS..."
+	@for f in $(shell jq -r '.html[]' $(CONFIG)); do \
+		html-minifier-terser $(OUT_DIR)/$$f -o $(OUT_DIR)/$$f --collapse-whitespace --remove-comments --minify-js true --minify-css true; \
+	done
+	@for f in $(shell jq -r '.js[]' $(CONFIG)); do \
+		terser $(OUT_DIR)/$$f -o $(OUT_DIR)/$$f --compress --mangle; \
+	done
+	@for f in $(shell jq -r '.css[]' $(CONFIG)); do \
+		cleancss -o $(OUT_DIR)/$$f $(OUT_DIR)/$$f; \
+	done
+
+# Универсальная обфускация JS
+obfuscate:
+	@echo "Обфускация JS..."
+	@for f in $(shell jq -r '.js[]' $(CONFIG)); do \
+		javascript-obfuscator $(OUT_DIR)/$$f --output $(OUT_DIR)/$$f; \
+	done
+
+# Универсальная защита HTML от копирования
+protect:
+	@echo "Добавление защиты от копирования..."
+	@for f in $(shell jq -r '.html[]' $(CONFIG)); do \
+		node protect-html.js $(OUT_DIR)/$$f; \
+	done
+
+clean:
+	rm -rf $(OUT_DIR)
